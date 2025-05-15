@@ -1,12 +1,12 @@
-# 🚀 Guide de Déploiement Automatique avec GitHub Actions
+# Guide de Déploiement Automatique avec GitHub Actions
 
 Ce dépôt contient un site web statique déployé automatiquement sur un serveur via GitHub Actions. Ce README détaille la configuration nécessaire pour mettre en place et utiliser ce système de déploiement continu.
 
-## 📋 Présentation du Projet
+## Présentation du Projet
 
 Ce projet utilise GitHub Actions pour automatiser le déploiement d'un site web HTML/CSS sur un serveur distant via SSH et rsync. Chaque fois qu'un push est effectué sur la branche `main`, le workflow se déclenche et met à jour le site web sur le serveur.
 
-## ⚙️ Configuration des Secrets GitHub
+## Configuration des Secrets GitHub
 
 Pour que le workflow fonctionne correctement, vous devez configurer les secrets suivants dans votre dépôt GitHub :
 
@@ -20,11 +20,11 @@ Pour que le workflow fonctionne correctement, vous devez configurer les secrets 
 | `SSH_HOST` | Adresse IP ou nom de domaine du serveur | `12.34.56.78` ou `monserveur.com` |
 | `REMOTE_DIR` | Chemin du répertoire de déploiement | `/var/www/html/monsite` |
 
-> 💡 **Note**: Contrairement à de nombreux tutoriels, vous n'avez pas besoin de configurer manuellement `SSH_KNOWN_HOSTS`. Notre workflow récupère automatiquement l'empreinte du serveur pendant l'exécution.
+> **Note**: Contrairement à de nombreux tutoriels, vous n'avez pas besoin de configurer manuellement `SSH_KNOWN_HOSTS`. Notre workflow récupère automatiquement l'empreinte du serveur pendant l'exécution.
 
-> 🔑 **Astuce pour les clés SSH**: Si vous vous connectez déjà à votre serveur avec une clé SSH existante, vous pouvez réutiliser cette même clé pour GitHub Actions! Il vous suffit de copier le contenu de votre fichier de clé privée (généralement `~/.ssh/id_rsa` ou `~/.ssh/id_ed25519`) dans le secret `SSH_PRIVATE_KEY`. Aucune configuration supplémentaire n'est nécessaire sur le serveur car votre clé est déjà autorisée.
+> **Astuce pour les clés SSH**: Si vous vous connectez déjà à votre serveur avec une clé SSH existante, vous pouvez réutiliser cette même clé pour GitHub Actions! Il vous suffit de copier le contenu de votre fichier de clé privée (généralement `~/.ssh/id_rsa` ou `~/.ssh/id_ed25519`) dans le secret `SSH_PRIVATE_KEY`. Aucune configuration supplémentaire n'est nécessaire sur le serveur car votre clé est déjà autorisée.
 
-## 🔧 Prérequis sur votre Serveur de Déploiement
+## Prérequis sur votre Serveur de Déploiement
 
 **Important** : Ces étapes doivent être réalisées sur votre serveur de déploiement **avant** d'exécuter le workflow GitHub Actions. Elles sont nécessaires pour que le serveur autorise la connexion depuis le runner GitHub.
 
@@ -64,9 +64,9 @@ sudo chown -R votre-utilisateur:www-data /var/www/html/monsite
 sudo chmod -R 755 /var/www/html/monsite
 ```
 
-> ⚠️ **Attention** : Ces commandes sont à exécuter sur votre serveur de déploiement, pas sur les runners GitHub. Elles configurent votre serveur pour qu'il accepte les déploiements provenant de GitHub Actions.
+> **Attention** : Ces commandes sont à exécuter sur votre serveur de déploiement, pas sur les runners GitHub. Elles configurent votre serveur pour qu'il accepte les déploiements provenant de GitHub Actions.
 
-## 🔄 Structure du Workflow
+## Structure du Workflow
 
 Le workflow GitHub Actions (`.github/workflows/deploy.yml`) contient les étapes suivantes, exécutées automatiquement sur les runners GitHub :
 
@@ -77,7 +77,7 @@ Le workflow GitHub Actions (`.github/workflows/deploy.yml`) contient les étapes
 5. **Déploiement vers le serveur** : Transfère les fichiers via rsync avec les exclusions appropriées
 6. **Statut du déploiement** : Affiche un message de succès une fois terminé
 
-## 🔍 Test et Dépannage
+## Test et Dépannage
 
 ### Tester le workflow
 
@@ -92,10 +92,9 @@ Le workflow GitHub Actions (`.github/workflows/deploy.yml`) contient les étapes
 |----------|----------|
 | Erreur d'authentification SSH | Vérifiez que `SSH_PRIVATE_KEY` est correctement configuré et que la clé publique est présente dans `authorized_keys` sur votre serveur |
 | Permission denied | Vérifiez les permissions du dossier de destination sur le serveur |
-| Échec du déploiement rsync | Vérifiez que rsync est installé sur le serveur et que les chemins sont corrects |
 | Problèmes avec l'empreinte du serveur | Si vous rencontrez des problèmes avec la vérification automatique du serveur, vérifiez que `SSH_HOST` est correct |
 
-## 🔧 Personnalisation
+## Personnalisation
 
 ### Adapter le workflow pour d'autres projets
 
@@ -111,9 +110,8 @@ Pour réutiliser ce workflow avec d'autres projets web :
 - Intégrer des tests automatiques avant le déploiement
 - Ajouter des notifications Slack/Discord après le déploiement
 - Configurer un déploiement multi-environnement (staging/production)
-- Implémenter une invalidation de cache CDN après déploiement
 
-## 📚 Ressources Officielles
+## Ressources Officielles
 
 - [GitHub Actions - Documentation](https://docs.github.com/en/actions)
 - [Actions Workflow Syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
@@ -126,5 +124,3 @@ Pour réutiliser ce workflow avec d'autres projets web :
 - [GitHub Actions - Variables d'environnement](https://docs.github.com/en/actions/learn-github-actions/environment-variables)
 
 ---
-
-💡 **Astuce finale** : Si vous modifiez ce workflow, testez-le d'abord avec un répertoire de destination non critique sur votre serveur avant de cibler votre environnement de production.
